@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.16;
 
-import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/access/Ownable.sol"; // El owner del contrato va a ser el que lo despliegue
 
 interface IERC20 {
     
@@ -11,13 +11,11 @@ interface IERC20 {
 
 }
 
-contract Payments {
+contract Payments is Ownable {
 
-    address OWNER;
     IERC20 usdt;
 
     constructor() {
-        OWNER = 0x075D29D70FF3d5AD1a2569bba6F581CBf2be7Cee; //Aqui va la address owner
         usdt = IERC20(address(0x337610d27c682E347C9cD60BD4b3b107C9d34dDd));  //USDT in BSC testnet
     }
 
@@ -96,11 +94,6 @@ contract Payments {
             i+1;
         }
         delete bonusArray;    //Restart array
-    }
-
-    modifier onlyOwner() {
-        require(OWNER == msg.sender, "You are not the owner");
-        _;
     }
   
 }
